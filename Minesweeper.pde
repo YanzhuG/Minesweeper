@@ -4,8 +4,8 @@ int NUM_COLS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines= new ArrayList <MSButton>(); 
 Boolean valid;
-int amount=NUM_ROWS*NUM_COLS;
-int minenums=1;//ArrayList of just the minesweeper buttons that are mined
+int amount=0;
+int minenums=2;//ArrayList of just the minesweeper buttons that are mined
 
 void setup ()
 {
@@ -31,19 +31,17 @@ public void setMines()
   int r = (int)(Math.random()*NUM_ROWS);
   int c = (int)(Math.random()*NUM_COLS);
   if (!mines.contains(buttons[r][c]))
-    mines.add(buttons[r][c]);
-  System.out.println(r+"'"+c);//your code
+    mines.add(buttons[r][c]);//your code
 }
 
 public void draw ()
 {
   if (isWon() == true)
-  //System.out.println("1");
     displayWinningMessage();
 }
 public boolean isWon()
 {
-  if(amount==countMines(NUM_ROWS,NUM_COLS)){
+  if(amount==minenums){
     return true;
   }//your code here
   return false;
@@ -58,7 +56,7 @@ public void displayWinningMessage()
 {
   fill(253,175,152);
   textSize(30);
-  text("You Win",250,430);//your code here
+  text("You Win",200,430);//your code here
 }
 public boolean isValid(int r, int c)
 {
@@ -118,13 +116,11 @@ public class MSButton
     isWon();
     if (mouseButton==RIGHT) {
       flagged=!flagged;
-      amount--;
-      System.out.println(amount);
+      amount++;
       if (flagged==false)
         clicked=false;
     } else if (mines.contains(this))
     {
-      System.out.println("Lose");
       displayLosingMessage();
     }
     else if(countMines(a,b)>0){
